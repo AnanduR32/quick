@@ -1,28 +1,55 @@
-# Angular specific
+# ==========================================
+# .NET / Visual Studio / Core
+# ==========================================
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio / VS Code Cache and Settings
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains IDEs
+.idea/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# .NET Core Secrets and local settings
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# ==========================================
+# Angular / Node.js
+# ==========================================
+# Dependencies
+node_modules/
+/npm-debug.log
+/yarn-error.log
+
+# Angular Build and Cache Output
 /dist/
 /out-tsc/
-/tmp/
+/.angular/
+
+# Diagnostics / Testing logs
 /coverage/
 /e2e/test-output/
-/.angular/
-.angular/
 
-# Node modules and dependency files
-/node_modules/
-/package-lock.json
-/yarn.lock
-
-# Environment files
-/.env
-
-# Angular CLI and build artefacts
-/.angular-cli.json
-/.ng/
-
-# TypeScript cache
-*.tsbuildinfo
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# OS Files
+.DS_Store
+Thumbs.db
