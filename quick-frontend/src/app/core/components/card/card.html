@@ -1,1 +1,13 @@
-<p>card works!</p>
+<div class="card">
+  <!-- Image Layer -->
+  <img [src]="imageUrl" [alt]="title" class="card-img" />
+
+  <!-- Body Content Layer -->
+  <div class="card-content">
+    <h3>{{ title }}</h3>
+    
+    @if (subtitle) {
+      <p>{{ subtitle }}</p>
+    }
+  </div>
+</div>

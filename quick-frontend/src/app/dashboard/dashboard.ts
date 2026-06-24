@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Search } from '../core/components/search/search';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterOutlet, Search],
+  imports: [RouterOutlet],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

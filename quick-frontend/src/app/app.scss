@@ -1,0 +1,16 @@
+@import './core/styles/base';
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-body);
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Global Reusable Mixin (Optional shortcut for items like flex containers or grid rows)
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,1 +1,8 @@
-<p>search works!</p>
+<div class="search-wrapper">
+  <input 
+    type="text" 
+    class="search-input" 
+    [(ngModel)]="searchQuery"
+    (input)="onSearchChange()"
+    placeholder="Search item..." />
+</div>
