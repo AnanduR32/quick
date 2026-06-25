@@ -1,8 +1,7 @@
 <div class="search-wrapper">
-  <input 
-    type="text" 
-    class="search-input" 
-    [(ngModel)]="searchQuery"
-    (input)="onSearchChange()"
-    placeholder="Search item..." />
+  <input type="text" class="search-input" [(ngModel)]="searchQueryValue" (ngModelChange)="onSearchInputChange($event)"
+    (keydown.enter)="onEnterPressed()" placeholder="Search item..." />
+  <button class="search-button" (click)="onEnterPressed()">
+    <span class="search-icon">&#128269;</span>
+  </button>
 </div>

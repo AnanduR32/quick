@@ -12,23 +12,30 @@
     display: flex;
     gap: 1.5rem;
     list-style: none;
+    padding: inherit;
 
-    a {
-      color: var(--text-body);
-      text-decoration: none;
-      transition: color 0.2s ease-in-out;
+    li {
+      display: flex;
+      align-items: center;
 
-      &:hover {
-        color: var(--text-primary);
-      }
+      a {
+        color: var(--text-body);
+        text-decoration: none;
+        transition: color 0.2s ease-in-out;
 
-      &.active-tab {
-        color: var(--text-primary);
-        border-bottom: 2px solid var(--accent);
+        &:hover {
+          color: var(--text-primary);
+        }
+
+        &.active-tab {
+          color: var(--text-primary);
+          border-bottom: 2px solid var(--accent);
+        }
       }
     }
   }
+
   app-search {
-    margin-left: auto; 
+    margin: auto;
   }
 }

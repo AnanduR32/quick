@@ -1,0 +1,27 @@
+.welcome-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-size: 3rem;
+    padding: 2rem;
+    .welcome-text {
+        color: var(--text-primary);
+    }
+    .prompt {
+        margin-left: 0.5rem;
+        font-size: 4rem;
+        vertical-align: baseline; 
+        color: var(--accent);
+        animation: blink 1s step-end infinite;
+    }
+}
+
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}

@@ -1,1 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+@import './app/core/styles/base';
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    overflow: hidden;
+
+}
+
+html,
+body,
+app-root,
+app-dashboard {
+    /* Add your dashboard tag here for safety */
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    background-color: var(--bg-main);
+    color: var(--text-body);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.items-grid {
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    align-items: start;
+    grid-auto-rows: max-content;
+
+    /* Custom Y2K Pastel Scrollbar Styling to match your look! (Optional) */
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--search-field);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--border-outline);
+        border-radius: 4px;
+
+        &:hover {
+            background: var(--accent);
+        }
+    }
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    margin: 1rem;
+    padding: 0 1rem;
+    border-radius: 12px;
+
+    font-size: 1rem;
+    color: var(--text-secondary);
+
+    background-color: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}

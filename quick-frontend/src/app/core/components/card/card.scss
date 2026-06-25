@@ -4,6 +4,11 @@
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.2s ease;
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 320px;
 
   &:hover {
     transform: translateY(-4px);

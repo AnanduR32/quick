@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Search as SearchService } from '../../../core/services/search';
 
 @Component({
   selector: 'app-search',
@@ -8,12 +9,23 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './search.scss',
 })
 export class Search {
-  searchQuery: string = '';
+  private searchService = inject(SearchService);
 
-  @Output() searchEvent = new EventEmitter<string>();
+  get searchQueryValue(): string {
+    return this.searchService.searchQuery();
+  }
 
-  onSearchChange() {
-    // Emits the text string upstream whenever a key is pressed
-    this.searchEvent.emit(this.searchQuery);
+  set searchQueryValue(value: string) {
+    // Intentionally empty setter to prevent direct updates to the signal from the template.
+  }
+
+  private currentInputBuffer: string = '';
+
+  protected onSearchInputChange(value: string) {
+    this.currentInputBuffer = value;
+  }
+
+  protected onEnterPressed() {
+    this.searchService.updateQuery(this.currentInputBuffer);
   }
 }

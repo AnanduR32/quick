@@ -1,0 +1,1 @@
+export type ActiveContext = 'meals' | 'cocktails' | 'welcome';

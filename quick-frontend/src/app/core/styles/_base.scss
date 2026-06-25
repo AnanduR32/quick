@@ -1,0 +1,60 @@
+/* ==========================================================================
+   1. Clean Core Swatches Repository
+   ========================================================================== */
+$beige: #FFFFE8;
+$aqua-marine: #8CFFDA;
+$purple-x11: #8447FF;
+$mauve-magic: #D972FF;
+$blush-pop: #FFB2E6;
+$lavender-veil: #FFEBF9;
+$petal-forest: #FFD6F3;
+$ink-dark: #120826;
+$slate-muted: #5A4D75;
+
+/* ==========================================================================
+   2. Light Mode - Clean Pastel Canvas
+   ========================================================================== */
+:root {
+  --bg-main: #{$beige};
+  --bg-glass: #{color-mix(in srgb, $purple-x11 8%, transparent)};
+
+  --search-outline: #{$blush-pop};
+  --search-field: #{$lavender-veil};
+  --search-field-hover: #{$petal-forest};
+  --search-field-text: #{$ink-dark};
+
+  --accent: #{$purple-x11};
+  --accent-hover: #{$mauve-magic};
+  --border-outline: #{$mauve-magic};
+  --border-outline-hover:#{$blush-pop};
+
+  --text-body: #{$ink-dark};
+  --text-primary: #{$ink-dark};
+  --text-muted: #{$slate-muted};
+  --text-on-accent: #FFFFFF;
+}
+
+/* ==========================================================================
+   3. Dark Mode - Immersive Neon Cyber Void
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-main: #0D0B14;
+    --bg-glass: #{color-mix(in srgb, $mauve-magic 14%, transparent)};
+
+    --search-field: #191426;
+    --search-field-hover: #231B36;
+    --search-outline: #{$aqua-marine};
+    --search-field-text: #{$beige};
+
+    --accent: #{$mauve-magic};
+    --accent-hover: #{$aqua-marine}; // Blinks brilliant neon teal on hover!
+    --border-outline: #{$purple-x11}; // Subtler border depth so neon components look structured
+    --border-outline-hover:#{$mauve-magic};
+
+    --text-body: #{$beige};
+    --text-primary: #{$lavender-veil};
+    --text-muted: #{$petal-forest};
+    --text-on-accent: #0D0B14; // Clean contrast knock-out text on bright buttons
+  }
+}

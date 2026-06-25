@@ -1,6 +1,20 @@
-.items-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  width: 100%;
+
+  overflow: hidden;
+
+  .dashboard-header {
+    flex-shrink: 0;
+  }
+
+  .dashboard-content {
+    flex-grow: 1;
+    height: 0;
+    width: 100%;
+    overflow: hidden;
+  }
 }

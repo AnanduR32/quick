@@ -1,1 +1,11 @@
-<p>cocktails-component works!</p>
+@if (cocktails().length > 0) {
+<div class="items-grid">
+    @for (cocktail of cocktails(); track cocktail.id) {
+    <app-card [item]="cocktail"></app-card>
+    }
+</div>
+} @else {
+<div class="empty-state">
+    <p>Type a cocktail name in the search bar and press Enter to find your cocktail of choice</p>
+</div>
+}

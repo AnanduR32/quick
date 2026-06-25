@@ -1,23 +1,21 @@
-import { Component, effect, signal, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { Search as SearchService } from '../../core/services/search';
+import { Card } from '../../core/components/card/card';
 
 @Component({
   selector: 'app-cocktails-component',
-  imports: [],
+  imports: [Card],
   templateUrl: './cocktails-component.html',
   styleUrl: './cocktails-component.scss',
 })
 export class CocktailsComponent {
-  cocktails = signal<any[]>([]);
-  private searchService: SearchService = inject(SearchService);
-
-  ngOnInit() {
-    this.searchService.updateContext('cocktails');
-    effect(() => {
-      const text = this.searchService.searchQuery();
-      this.searchService.executeSearch(text).subscribe(res => {
-        this.cocktails.set(res.cocktails || []);
-      });
-    });
-  }
+  private searchService = inject(SearchService);
+  cocktails = toSignal(
+    toObservable(this.searchService.searchQuery).pipe(
+      switchMap(text => this.searchService.executeSearch(text))
+    ),
+    { initialValue: [] }
+  );
 }

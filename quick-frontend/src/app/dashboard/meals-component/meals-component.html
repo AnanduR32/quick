@@ -1,1 +1,11 @@
-<p>meals-component works!</p>
+@if (meals().length > 0) {
+<div class="items-grid">
+    @for (meal of meals(); track meal.id) {
+    <app-card [item]="meal"></app-card>
+    }
+</div>
+} @else {
+<div class="empty-state">
+    <p>Type a dish name in the search bar and press Enter to find your meal of choice</p>
+</div>
+}

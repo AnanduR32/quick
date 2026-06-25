@@ -1,26 +1,29 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Service, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { of, tap } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { of } from 'rxjs';
-import { MealsApi } from './meals-api';
-import { CocktailsApi } from './cocktails-api';
 import { ActiveContext } from '../Enums/active-context';
+import { CardItem } from '../models/card-item';
+import { CocktailsApi } from './cocktails-api';
 import { BaseSearchApi } from './contracts/search-base';
+import { MealsApi } from './meals-api';
+import { Navigation } from './navigation';
 
-@Service()
+@Injectable({
+  providedIn: 'root' 
+})
 export class Search {
-    private mealsApi: MealsApi = inject(MealsApi); 
+    private mealsApi: MealsApi = inject(MealsApi);
     private cocktailsApi: CocktailsApi = inject(CocktailsApi);
+    private navigation: Navigation = inject(Navigation);
 
     searchQuery = signal<string>('');
-    currentContext = signal<ActiveContext>('welcome');
+    isLoading = signal<boolean>(false);
 
     updateQuery(query: string) {
         this.searchQuery.set(query);
     }
 
-    updateContext(context: ActiveContext) {
-        this.currentContext.set(context);
+    clearQuery() {
         this.searchQuery.set('');
     }
 
@@ -35,17 +38,16 @@ export class Search {
         }
     }
 
-    executeSearch(query: string): Observable<any> {
-        if (!query.trim()) return of({ items: [] });
-
-        const activeApi = this.getApiService(this.currentContext());
-
+    executeSearch(query: string): Observable<CardItem[]> {
+        if (!query.trim()) return of([]);
+        const activeApi = this.getApiService(this.navigation.currentContext());
         if (!activeApi) {
-            return of({ items: [] });
+            return of([]);
         }
-        var searchResult = activeApi.search(query);
-        console.log(`Search executed for context: ${this.currentContext()} with query: "${query}"`);
-        console.log(`Search result:`, searchResult);
-        return searchResult;
+        this.isLoading.set(true);
+        return activeApi.search(query).pipe(
+            tap(() => this.isLoading.set(false)),
+            tap(error => this.isLoading.set(false))
+        ) || [];
     }
 }
