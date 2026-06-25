@@ -1,2 +1,2 @@
 # quick
-Fullstack app using .net and angular 
+Frontend app using angular 22
