@@ -1,53 +1,52 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { of, tap } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
-import { ActiveContext } from '../Enums/active-context';
-import { CardItem } from '../models/card-item';
-import { CocktailsApi } from './cocktails-api';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { CocktailsService } from './cocktails/cocktails-service';
 import { BaseSearchApi } from './contracts/search-base';
-import { MealsApi } from './meals-api';
+import { MealsService } from './meals/meals-service';
 import { Navigation } from './navigation';
 
 @Injectable({
-  providedIn: 'root' 
+    providedIn: 'root'
 })
 export class Search {
-    private mealsApi: MealsApi = inject(MealsApi);
-    private cocktailsApi: CocktailsApi = inject(CocktailsApi);
     private navigation: Navigation = inject(Navigation);
+    private mealsService: MealsService = inject(MealsService);
+    private cocktailsService: CocktailsService = inject(CocktailsService);
 
-    searchQuery = signal<string>('');
-    isLoading = signal<boolean>(false);
+    public searchQueryValue = computed(() => {
+        const service = this.getService();
+        return service ? service.searchQuery() : '';
+    });
 
-    updateQuery(query: string) {
-        this.searchQuery.set(query);
+    public updateQuery(query: string): void {
+        const service = this.getService();
+        service?.setSearchQuery(query)
+        service?.search(query);
+
     }
 
-    clearQuery() {
-        this.searchQuery.set('');
+    public isLoading = computed(() => {
+        const service = this.getService();
+        return service ? service.isLoading() : false;
+    })
+
+    public init(): void {
+        this.getService()?.init();
     }
 
-    private getApiService(type: ActiveContext): BaseSearchApi | null {
-        switch (type) {
+    public cachedData = computed(() => {
+        const service = this.getService();
+        return service ? service.cachedData() : [];
+    })
+
+    private getService(): BaseSearchApi | null {
+        const context = this.navigation.currentContext();
+        switch (context) {
             case 'meals':
-                return this.mealsApi;
+                return this.mealsService;
             case 'cocktails':
-                return this.cocktailsApi;
+                return this.cocktailsService;
             default:
                 return null;
         }
-    }
-
-    executeSearch(query: string): Observable<CardItem[]> {
-        if (!query.trim()) return of([]);
-        const activeApi = this.getApiService(this.navigation.currentContext());
-        if (!activeApi) {
-            return of([]);
-        }
-        this.isLoading.set(true);
-        return activeApi.search(query).pipe(
-            tap(() => this.isLoading.set(false)),
-            tap(error => this.isLoading.set(false))
-        ) || [];
     }
 }

@@ -1,11 +1,12 @@
-@if (meals().length > 0) {
 <div class="items-grid">
-    @for (meal of meals(); track meal.id) {
-    <app-card [item]="meal"></app-card>
-    }
+    <div [style.visibility]="isLoading() ? 'hidden' : 'visible'" style="display: contents;">
+        @for (meal of meals(); track meal.id) {
+        <app-card [item]="meal"></app-card>
+        }
+    </div>
 </div>
-} @else {
+@if (!isLoading() && (meals().length === 0 || !searchQueryValue()?.trim())) {
 <div class="empty-state">
-    <p>Type a dish name in the search bar and press Enter to find your meal of choice</p>
+    <p>Type a dish name in the search bar and press Enter to discover meals!</p>
 </div>
 }

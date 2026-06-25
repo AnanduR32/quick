@@ -5,8 +5,10 @@ import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
 import { Search } from './core/services/search';
 import { Navigation } from './core/services/navigation';
-import { MealsApi } from './core/services/meals-api';
-import { CocktailsApi } from './core/services/cocktails-api';
+import { MealsApi } from './core/services/meals/meals-api';
+import { CocktailsApi } from './core/services/cocktails/cocktails-api';
+import { MealsService } from './core/services/meals/meals-service';
+import { CocktailsService } from './core/services/cocktails/cocktails-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +18,8 @@ export const appConfig: ApplicationConfig = {
     Search,
     Navigation,
     MealsApi,
-    CocktailsApi
+    CocktailsApi,
+    MealsService,
+    CocktailsService
   ]
 };

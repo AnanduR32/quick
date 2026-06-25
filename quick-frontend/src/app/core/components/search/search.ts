@@ -1,6 +1,7 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Search as SearchService } from '../../../core/services/search';
+import { Navigation } from '../../../core/services/navigation';
 
 @Component({
   selector: 'app-search',
@@ -10,16 +11,11 @@ import { Search as SearchService } from '../../../core/services/search';
 })
 export class Search {
   private searchService = inject(SearchService);
-
-  get searchQueryValue(): string {
-    return this.searchService.searchQuery();
-  }
-
-  set searchQueryValue(value: string) {
-    // Intentionally empty setter to prevent direct updates to the signal from the template.
-  }
-
   private currentInputBuffer: string = '';
+
+  protected get searchQueryValue(): string {
+    return this.searchService.searchQueryValue();
+  }
 
   protected onSearchInputChange(value: string) {
     this.currentInputBuffer = value;

@@ -18,20 +18,25 @@ export class Dashboard implements OnInit, OnDestroy {
   private routerSubscription?: Subscription;
 
   ngOnInit() {
+    const currentUrl = this.router.url;
+    this.parseAndSetContext(currentUrl);
+
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      const url = event.urlAfterRedirects || event.url;
-
-      if (url.includes('/meals')) {
-        this.navigation.updateContext('meals');
-      } else if (url.includes('/cocktails')) {
-        this.navigation.updateContext('cocktails');
-      } else {
-        this.navigation.updateContext('welcome');
-      }
-      this.searchService.clearQuery();
+      const dynamicUrl = event.urlAfterRedirects || event.url;
+      this.parseAndSetContext(dynamicUrl);
     });
+  }
+
+  private parseAndSetContext(url: string): void {
+    if (url.includes('/meals')) {
+      this.navigation.updateContext('meals');
+    } else if (url.includes('/cocktails')) {
+      this.navigation.updateContext('cocktails');
+    } else {
+      this.navigation.updateContext('welcome');
+    }
   }
 
   ngOnDestroy() {

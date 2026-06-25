@@ -1,11 +1,12 @@
-@if (cocktails().length > 0) {
 <div class="items-grid">
-    @for (cocktail of cocktails(); track cocktail.id) {
-    <app-card [item]="cocktail"></app-card>
-    }
+    <div [style.visibility]="isLoading() ? 'hidden' : 'visible'" style="display: contents;">
+        @for (cocktail of cocktails(); track cocktail.id) {
+        <app-card [item]="cocktail"></app-card>
+        }
+    </div>
 </div>
-} @else {
+@if (!isLoading() && (cocktails().length === 0 || !searchQueryValue()?.trim())) {
 <div class="empty-state">
-    <p>Type a cocktail name in the search bar and press Enter to find your cocktail of choice</p>
+    <p>Type a cocktail name in the search bar and press Enter to discover cocktails!</p>
 </div>
 }

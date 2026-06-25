@@ -1,8 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs/internal/operators/switchMap';
-import { Search as SearchService } from '../../core/services/search';
+import { Component, inject, OnInit } from '@angular/core';
 import { Card } from '../../core/components/card/card';
+import { Search as SearchService } from '../../core/services/search';
 
 @Component({
   selector: 'app-meals-component',
@@ -10,12 +8,12 @@ import { Card } from '../../core/components/card/card';
   templateUrl: './meals-component.html',
   styleUrl: './meals-component.scss',
 })
-export class MealsComponent {
+export class MealsComponent implements OnInit {
   private searchService = inject(SearchService);
-  meals = toSignal(
-    toObservable(this.searchService.searchQuery).pipe(
-      switchMap(text => this.searchService.executeSearch(text))
-    ),
-    { initialValue: [] }
-  );
+  meals = this.searchService.cachedData;
+  isLoading = this.searchService.isLoading;
+  searchQueryValue = this.searchService.searchQueryValue;
+  ngOnInit() {
+    this.searchService.init();
+  }
 }
