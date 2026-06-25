@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Search as SearchService } from '../core/services/search';
-import { filter } from 'rxjs/internal/operators/filter';
+import { filter, Subscription } from 'rxjs';
 import { Navigation } from '../core/services/navigation';
 import { NavigationComponent } from '../core/components/navigation/navigation';
 
@@ -11,15 +11,16 @@ import { NavigationComponent } from '../core/components/navigation/navigation';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard {
+export class Dashboard implements OnInit, OnDestroy {
   private searchService = inject(SearchService);
   private router = inject(Router);
   private navigation = inject(Navigation);
+  private routerSubscription?: Subscription;
 
   ngOnInit() {
-    this.router.events.pipe(
+    this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
+    ).subscribe((event: NavigationEnd) => {
       const url = event.urlAfterRedirects || event.url;
 
       if (url.includes('/meals')) {
@@ -31,5 +32,9 @@ export class Dashboard {
       }
       this.searchService.clearQuery();
     });
+  }
+
+  ngOnDestroy() {
+    this.routerSubscription?.unsubscribe();
   }
 }
