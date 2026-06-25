@@ -1,7 +1,6 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Search as SearchService } from '../../../core/services/search';
-import { Navigation } from '../../../core/services/navigation';
 
 @Component({
   selector: 'app-search',

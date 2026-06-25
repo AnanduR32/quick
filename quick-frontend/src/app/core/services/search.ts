@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable } from '@angular/core';
 import { CocktailsService } from './cocktails/cocktails-service';
 import { BaseSearchApi } from './contracts/search-base';
 import { MealsService } from './meals/meals-service';
@@ -19,19 +19,13 @@ export class Search {
 
     public updateQuery(query: string): void {
         const service = this.getService();
-        service?.setSearchQuery(query)
-        service?.search(query);
-
+        service?.setSearchQuery(query);
     }
 
     public isLoading = computed(() => {
         const service = this.getService();
         return service ? service.isLoading() : false;
     })
-
-    public init(): void {
-        this.getService()?.init();
-    }
 
     public cachedData = computed(() => {
         const service = this.getService();

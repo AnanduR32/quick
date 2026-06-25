@@ -1,8 +1,9 @@
 import { inject, Injectable, Signal, signal } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { CardItem } from '../../models/card-item';
 import { BaseSearchApi } from '../contracts/search-base';
 import { CocktailsApi } from './cocktails-api';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,6 @@ export class CocktailsService implements BaseSearchApi {
     private cocktailsApi: CocktailsApi = inject(CocktailsApi);
 
     private _searchQuery = signal<string>('');
-    public cachedData = signal<CardItem[]>([]);
     public isLoading = signal<boolean>(false);
 
     get searchQuery(): Signal<string> {
@@ -22,34 +22,49 @@ export class CocktailsService implements BaseSearchApi {
         this._searchQuery.set(query)
     }
 
-    private lastSearchQuery = '';
+    public cachedData = toSignal( //subscriber
+        toObservable(this.searchQuery).pipe( //emitter/notifier
+            tap(() => this.isLoading.set(true)),
+            switchMap(query => { // emitter/notifier triggers
+                const cleanQuery = query?.trim().toLowerCase() || 'a'; 
+                return this.cocktailsApi.searchByKeyWord(cleanQuery).pipe(
+                    catchError((err) => {
+                        console.error('Meals API lookup failed:', err);
+                        return of([]); 
+                    })
+                );
+            }),
+            tap(() => this.isLoading.set(false))
+        ),
+        { initialValue: [] }
+    );
 
-    public search(query: string): void {
-        const cleanQuery = query.trim().toLowerCase() || 'a';
+    // public search(query: string): void {
+    //     const cleanQuery = query.trim().toLowerCase() || 'a';
 
-        if (cleanQuery === this.lastSearchQuery) {
-            console.log(`Cache Hit for query: "${cleanQuery}". Skipping API lookup.`);
-            return;
-        }
+    //     if (cleanQuery === this.lastSearchQuery) {
+    //         console.log(`Cache Hit for query: "${cleanQuery}". Skipping API lookup.`);
+    //         return;
+    //     }
 
-        this.lastSearchQuery = cleanQuery;
-        this.isLoading.set(true);
-        this.cocktailsApi.searchByKeyWord(cleanQuery).subscribe({
-            next: (data: CardItem[]) => {
-                this.cachedData.set(data);
-            },
-            error: (error) => {
-                console.error(`Error during search:`, error);
-            },
-            complete: () => {
-                this.isLoading.set(false);
-            }
-        });
-    }
+    //     this.lastSearchQuery = cleanQuery;
+    //     this.isLoading.set(true);
+    //     this.cocktailsApi.searchByKeyWord(cleanQuery).subscribe({
+    //         next: (data: CardItem[]) => {
+    //             this.cachedData.set(data);
+    //         },
+    //         error: (error) => {
+    //             console.error(`Error during search:`, error);
+    //         },
+    //         complete: () => {
+    //             this.isLoading.set(false);
+    //         }
+    //     });
+    // }
 
-    public init(): void {
-        if (this.cachedData().length === 0) {
-            this.search('a');
-        }
-    }
+    // public init(): void {
+    //     if (!this._searchQuery()) {
+    //         this._searchQuery.set('a');
+    //     }
+    // }
 }

@@ -14,6 +14,6 @@ export class CocktailsComponent implements OnInit {
   isLoading = this.searchService.isLoading;
   searchQueryValue = this.searchService.searchQueryValue;
   ngOnInit() {
-    this.searchService.init();
+    // this.searchService.init();
   }
 }
