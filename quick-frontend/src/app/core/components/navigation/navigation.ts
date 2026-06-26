@@ -10,7 +10,9 @@ import { routes as dashboardRoutes } from '../../../dashboard/dashboard.routes';
   styleUrl: './navigation.scss',
 })
 export class NavigationComponent {
-  navItems = dashboardRoutes.map(route => {
+  navItems = dashboardRoutes
+  .filter(route => !route.redirectTo)
+  .map(route => {
     const isRoot = route.path === '';
     return {
       label: isRoot ? 'Welcome' : route.path!.charAt(0).toUpperCase() + route.path!.slice(1),

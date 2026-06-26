@@ -1,0 +1,29 @@
+<div class="container">
+    @if (!isLoading() && !searchQueryValue()?.trim()) {
+    <div class="empty-state">
+        <p>Use the search bar to discover discover items!</p>
+    </div>
+    }
+
+    @if (isUserManuallySearched()){
+    <div class="items-grid" [style.visibility]="isLoading() ? 'hidden' : 'visible'">
+        @for (item of combinedMenu(); track item.id) {
+        <app-card [item]="item"></app-card>
+        }
+    </div>
+    }
+    @else{
+    <div class="carousel-container">
+        <div class="carousel-track">
+            @for (item of meals(); track item.id) {
+            <app-card [item]="item"></app-card>
+            }
+        </div>
+        <div class="carousel-track">
+            @for (item of cocktails(); track item.id) {
+            <app-card [item]="item"></app-card>
+            }
+        </div>
+    </div>
+    }
+</div>

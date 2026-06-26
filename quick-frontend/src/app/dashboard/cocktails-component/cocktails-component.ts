@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Card } from '../../core/components/card/card';
-import { Search as SearchService } from '../../core/services/search';
+import { MenuService } from '../../core/services/menu-service';
 
 @Component({
   selector: 'app-cocktails-component',
@@ -8,12 +8,9 @@ import { Search as SearchService } from '../../core/services/search';
   templateUrl: './cocktails-component.html',
   styleUrl: './cocktails-component.scss',
 })
-export class CocktailsComponent implements OnInit {
-  private searchService = inject(SearchService);
-  cocktails = this.searchService.cachedData;
-  isLoading = this.searchService.isLoading;
-  searchQueryValue = this.searchService.searchQueryValue;
-  ngOnInit() {
-    // this.searchService.init();
-  }
+export class CocktailsComponent {
+  private menuService = inject(MenuService);
+  cocktails = this.menuService.cachedData;
+  isLoading = this.menuService.isLoading;
+  searchQueryValue = this.menuService.searchQueryValue;
 }

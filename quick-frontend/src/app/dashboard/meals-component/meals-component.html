@@ -1,3 +1,9 @@
+@if (!isLoading() && (meals().length === 0 || !searchQueryValue()?.trim())) {
+<div class="empty-state">
+    <p>Type a dish name in the search bar and press Enter to discover meals!</p>
+</div>
+}
+
 <div class="items-grid">
     <div [style.visibility]="isLoading() ? 'hidden' : 'visible'" style="display: contents;">
         @for (meal of meals(); track meal.id) {
@@ -5,8 +11,3 @@
         }
     </div>
 </div>
-@if (!isLoading() && (meals().length === 0 || !searchQueryValue()?.trim())) {
-<div class="empty-state">
-    <p>Type a dish name in the search bar and press Enter to discover meals!</p>
-</div>
-}

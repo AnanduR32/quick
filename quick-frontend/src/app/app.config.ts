@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 
 import { routes } from './app.routes';
-import { Search } from './core/services/search';
+import { MenuService } from './core/services/menu-service';
 import { Navigation } from './core/services/navigation';
 import { MealsApi } from './core/services/meals/meals-api';
 import { CocktailsApi } from './core/services/cocktails/cocktails-api';
@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(),
-    Search,
+    MenuService,
     Navigation,
     MealsApi,
     CocktailsApi,

@@ -38,33 +38,4 @@ export class CocktailsService implements BaseSearchApi {
         ),
         { initialValue: [] }
     );
-
-    // public search(query: string): void {
-    //     const cleanQuery = query.trim().toLowerCase() || 'a';
-
-    //     if (cleanQuery === this.lastSearchQuery) {
-    //         console.log(`Cache Hit for query: "${cleanQuery}". Skipping API lookup.`);
-    //         return;
-    //     }
-
-    //     this.lastSearchQuery = cleanQuery;
-    //     this.isLoading.set(true);
-    //     this.cocktailsApi.searchByKeyWord(cleanQuery).subscribe({
-    //         next: (data: CardItem[]) => {
-    //             this.cachedData.set(data);
-    //         },
-    //         error: (error) => {
-    //             console.error(`Error during search:`, error);
-    //         },
-    //         complete: () => {
-    //             this.isLoading.set(false);
-    //         }
-    //     });
-    // }
-
-    // public init(): void {
-    //     if (!this._searchQuery()) {
-    //         this._searchQuery.set('a');
-    //     }
-    // }
 }

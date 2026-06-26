@@ -8,12 +8,21 @@ export const routes: Routes = [
     },
     {
         path: 'meals',
-        loadComponent: () => import('./meals-component/meals-component')
-            .then(m => m.MealsComponent),
+        // loadComponent: () => import('./meals-component/meals-component')
+        //     .then(m => m.MealsComponent),
+        redirectTo: 'menu',
+        pathMatch: 'full'
     },
     {  
         path: 'cocktails',
-        loadComponent: () => import('./cocktails-component/cocktails-component')
-            .then(m => m.CocktailsComponent),
+        // loadComponent: () => import('./cocktails-component/cocktails-component')
+        //     .then(m => m.CocktailsComponent),
+        redirectTo: 'menu',
+        pathMatch: 'full'
+    },
+    {
+        path: 'menu',
+        loadComponent: () => import('./menu-component/menu-component')
+            .then(m => m.MenuComponent)
     }
 ];

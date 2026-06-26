@@ -1,10 +1,10 @@
-import { Component, effect, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { Search as SearchService } from '../core/services/search';
-import { filter } from 'rxjs';
-import { Navigation } from '../core/services/navigation';
-import { NavigationComponent } from '../core/components/navigation/navigation';
+import { Component, computed, effect, inject, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
+import { NavigationComponent } from '../core/components/navigation/navigation';
+import { ActiveContext } from '../core/Enums/active-context';
+import { Navigation } from '../core/services/navigation';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +13,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
-  private searchService = inject(SearchService);
   private router = inject(Router);
   private navigation = inject(Navigation);
 
@@ -24,24 +23,29 @@ export class Dashboard {
   );
 
   constructor() {
-    effect(() => {
-      if (this.navigationEnd()) {
+    effect(() => { // subscriber
+      if (this.navigationEnd()) { // "emitter"
         const event = this.navigationEnd() as NavigationEnd;
         const dynamicUrl = event.urlAfterRedirects || event.url;
-        this.parseAndSetContext(dynamicUrl);
+        this.parseAndSetContext(dynamicUrl); // triggered by "emitter"
       }
     });
 
     this.parseAndSetContext(this.router.url);
   }
 
-  private parseAndSetContext(url: string): void {
+  private parseAndSetContext(url: string): void { // action when 'navigationEnd' router events emitted by effect in constructor
     if (url.includes('/meals')) {
-      this.navigation.updateContext('meals');
+      this.navigation.updateContext(ActiveContext.meals);
     } else if (url.includes('/cocktails')) {
-      this.navigation.updateContext('cocktails');
+      this.navigation.updateContext(ActiveContext.cocktails);
+    }
+    else if (url.includes('/menu')){
+      this.navigation.updateContext(ActiveContext.menu);
     } else {
-      this.navigation.updateContext('welcome');
+      this.navigation.updateContext(ActiveContext.welcome);
     }
   }
+
+  private isAtDashboard: Signal<boolean> = computed(() => this.navigation.currentContext() == ActiveContext.welcome)
 }

@@ -10,6 +10,23 @@
 
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--search-field);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-outline);
+    border-radius: 4px;
+
+    &:hover {
+        background: var(--accent);
+    }
+}
+
 html,
 body,
 app-root,
@@ -37,24 +54,6 @@ app-dashboard {
     padding: 2rem;
     align-items: start;
     grid-auto-rows: max-content;
-
-    /* Custom Y2K Pastel Scrollbar Styling to match your look! (Optional) */
-    &::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: var(--search-field);
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: var(--border-outline);
-        border-radius: 4px;
-
-        &:hover {
-            background: var(--accent);
-        }
-    }
 }
 
 .empty-state {

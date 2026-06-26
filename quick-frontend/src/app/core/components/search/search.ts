@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Search as SearchService } from '../../../core/services/search';
+import { MenuService } from '../../services/menu-service';
 
 @Component({
   selector: 'app-search',
@@ -9,11 +9,11 @@ import { Search as SearchService } from '../../../core/services/search';
   styleUrl: './search.scss',
 })
 export class Search {
-  private searchService = inject(SearchService);
+  private menuService = inject(MenuService);
   private currentInputBuffer: string = '';
 
   protected get searchQueryValue(): string {
-    return this.searchService.searchQueryValue();
+    return this.menuService.searchQueryValue();
   }
 
   protected onSearchInputChange(value: string) {
@@ -21,6 +21,6 @@ export class Search {
   }
 
   protected onEnterPressed() {
-    this.searchService.updateQuery(this.currentInputBuffer);
+    this.menuService.updateQuery(this.currentInputBuffer);
   }
 }

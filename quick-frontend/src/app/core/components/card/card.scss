@@ -1,14 +1,21 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+  width: 15rem;
+  max-height: 300px
+}
+
 .card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-line);
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.2s ease;
-  width: 15rem;
+  width: 14rem;
   display: flex;
   flex-direction: column;
+  min-height: 270px;
   height: auto;
-  min-height: 320px;
 
   &:hover {
     transform: translateY(-4px);

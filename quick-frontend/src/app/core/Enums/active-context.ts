@@ -1,1 +1,6 @@
-export type ActiveContext = 'meals' | 'cocktails' | 'welcome';
+export enum ActiveContext {
+    'meals',
+    'cocktails',
+    'welcome',
+    'menu'
+}

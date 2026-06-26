@@ -5,7 +5,7 @@ import { ActiveContext } from '../Enums/active-context';
   providedIn: 'root'
 })
 export class Navigation {
-    public currentContext = signal<ActiveContext>('welcome');
+    public currentContext = signal<ActiveContext>(ActiveContext.welcome);
 
     public updateContext(context: ActiveContext) {
         this.currentContext.set(context);

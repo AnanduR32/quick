@@ -1,0 +1,32 @@
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.carousel-container {
+    margin: 1rem auto 0 auto;
+    width: 80%;
+    height: auto;
+    padding: 0 0 1.5rem 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 2rem 0 2rem;
+    grid-template-rows: repeat(auto-fill, minmax(1fr, 280px));
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    box-sizing: border-box;
+}
